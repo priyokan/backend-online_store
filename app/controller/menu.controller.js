@@ -9,7 +9,7 @@ exports.create = (req,res)=>{
     let menu = new Menu({
         namaMenu : req.body.namaMenu,
         deskripsi : req.body.deskripsi,
-        imgMenu : "http://localhost:8081/img/"+req.body.imgMenu+'.jpg'
+        imgMenu : "http://localhost:8081/img/menu/"+req.body.namaMenu+'.jpg'
     })
 
     menu.save()
@@ -61,7 +61,7 @@ exports.edit = (req,res)=>{
     Menu.findByIdAndUpdate(req.params.menuId,{
         namaMenu : req.body.namaMenu,
         deskripsi : req.body.deskripsi,
-        imgMenu : "http://localhost:8081/img/"+req.body.imgMenu+'.jpg'
+        imgMenu : "http://localhost:8081/img/menu/"+req.body.namaMenu+'.jpg'
     },{new:true})
     .then((result) => {
         if(!result){

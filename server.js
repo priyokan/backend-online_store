@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken')
 const logger = require('morgan')
 const dbConfig = require('./config/database.config')
 
+const menus = require('./app/routes/menu.routes')
+
 mongoose.Promise = global.Promise
 
 const app = express();
@@ -31,6 +33,11 @@ mongoose.connect(dbConfig.url,{
         process.exit()             
     });
 
+app.get('/',(req,res)=>{
+    res.json({'message':'hati hati ada api'})
+})
+
+app.use('/api/admin',menus)
 
 app.listen(8000,()=>{
     console.log('Server di port 8000')
