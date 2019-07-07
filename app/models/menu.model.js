@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const menuSchema = mongoose.Schema({
-    judul:{type:String},
+    namaMenu:{type:String},
     deskripsi:{type:String},
     imgMenu:{type:String}
 },{

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const kueSchema = mongoose.Schema({
-    nama:{type:String},
+    namaKue:{type:String},
     deskripsi:{type:String},
     harga:{type:String},
     imgKue:{type:String},
