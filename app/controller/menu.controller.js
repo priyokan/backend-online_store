@@ -2,7 +2,7 @@ const Menu = require('../models/menu.model')
 
 exports.create = (req,res)=>{
     if(!req.body){
-        return res.status(4-4).send({
+        return res.status(404).send({
             message:'menu harus di isi'
         })
     }
@@ -68,8 +68,8 @@ exports.edit = (req,res)=>{
             res.status(404).send({
                 message:'data tidak ditemukan'
             })
-            res.send(result)
         }
+        res.send(result)
     }).catch((err) => {
         if(err.kind === 'ObjectId'){
             return res.status(404).send({
