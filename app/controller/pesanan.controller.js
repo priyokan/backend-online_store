@@ -11,10 +11,10 @@ exports.create = (req,res)=>{
         nomorTelephone:req.body.nomorTelephone,
         email:req.body.email,
         pesanan:req.body.pesanan,
-        tangggalAmbil:req.body.tangggalAmbil,
+        tanggalAmbil:req.body.tanggalAmbil,
         status:'ordered'
     })
-    Pesanan.save()
+    pesanan.save()
     .then((result) => {
         res.send(result)
     }).catch((err) => {
@@ -64,7 +64,7 @@ exports.edit = (req,res)=>{
         nomorTelephone:req.body.nomorTelephone,
         email:req.body.email,
         pesanan:req.body.pesanan,
-        tangggalAmbil:req.body.tangggalAmbil,
+        tanggalAmbil:req.body.tanggalAmbil,
         status:req.body.status
     },{new:true})
     .then((result) => {
@@ -86,7 +86,7 @@ exports.edit = (req,res)=>{
     });
 }
 exports.delete = (req,res)=>{
-    Menu.findByIdAndRemove(req.params.pesananId)
+    Pesanan.findByIdAndRemove(req.params.pesananId)
     .then((result) => {
         if(!result){
             return res.status(404).send({

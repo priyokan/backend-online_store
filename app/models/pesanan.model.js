@@ -4,7 +4,7 @@ const pesananShema = mongoose.Schema({
     nomorTelephone:{type:String},
     email:{type:String},
     pesanan:{type:String},
-    tangggalAmbil:{type:String},
+    tanggalAmbil:{type:String},
     status:{type:String}
 },{
     timeStamps:true
