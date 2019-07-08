@@ -8,6 +8,7 @@ const dbConfig = require('./config/database.config')
 
 const users = require('./app/routes/user.routes')
 const menus = require('./app/routes/menu.routes')
+const kues = require('./app/routes/kue.routes')
 
 mongoose.Promise = global.Promise
 
@@ -40,6 +41,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/admin',menus)
 app.use('/api/user',users)
+app.use('/api/admin',kues)
 
 app.listen(8000,()=>{
     console.log('Server di port 8000')

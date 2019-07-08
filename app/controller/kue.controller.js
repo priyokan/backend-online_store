@@ -10,7 +10,7 @@ exports.create = (req,res)=>{
         namaKue:req.body.namaKue,
         deskripsi:req.body.deskripsi,
         harga:req.body.harga,
-        imgKue:"http://localhost:8081/img/kue"+req.body.namaKue+'.jpg',
+        imgKue:"http://localhost:8081/img/kue/"+req.body.namaKue+'.jpg',
         menuType:req.body.menuType,
         jumlahPesanan:req.body.jumlahPesanan,
     })
@@ -66,7 +66,7 @@ exports.edit = (req,res)=>{
         namaKue:req.body.namaKue,
         deskripsi:req.body.deskripsi,
         harga:req.body.harga,
-        imgKue:"http://localhost:8081/img/kue"+req.body.namaKue+'.jpg',
+        imgKue:"http://localhost:8081/img/kue/"+req.body.namaKue+'.jpg',
         menuType:req.body.menuType,
         jumlahPesanan:req.body.jumlahPesanan,
     },{new:true})
