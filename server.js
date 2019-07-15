@@ -39,7 +39,6 @@ app.get('/api',(req,res)=>{
     res.json({'message':'hati hati ada api'})
 })
 
-
 const validateUser = (req,res,next)=>{
     jwt.verify(req.headers['token'],jwtConfig.secretToken,(err,decoded)=>{
         if(err){
@@ -50,23 +49,33 @@ const validateUser = (req,res,next)=>{
                     data:null
                 })
             }else {  
-                const payload = jwt.decode(req.headers['token'])
-                const newtoken = jwt.sign({id:payload.id},
-                    jwtConfig.secretToken,
-                    {expiresIn:jwtConfig.tokenLife})  
-                const newrefreshToken = jwt.sign({id:payload.id},
-                                    jwtConfig.refreshTokenSecret,
-                                    {expiresIn:jwtConfig.refreshTokenLife})     
-                const response = {
-                    status:'sukses',    
-                    message:'refreshed',
-                    data:{
-                        token:newtoken,
-                        refreshToken:newrefreshToken,
+                jwt.verify(req.headers['refreshtoken'],jwtConfig.refreshTokenSecret,(error,decode)=>{
+                    if (error) {
+                        res.json({
+                            status:'error',
+                            message:error.message,                    
+                        })
+                    }else{
+                        const payload = jwt.decode(req.headers['refreshtoken'])
+                        const newtoken = jwt.sign({id:payload.id},
+                            jwtConfig.secretToken,
+                            {expiresIn:jwtConfig.tokenLife})  
+                        const newrefreshToken = jwt.sign({id:payload.id},
+                                            jwtConfig.refreshTokenSecret,
+                                            {expiresIn:jwtConfig.refreshTokenLife})     
+                        const response = {
+                            status:'sukses',    
+                            message:'refreshed',
+                            data:{
+                                newToken:newtoken,
+                                newTefreshToken:newrefreshToken,
+                            }
+                        }     
+                        res.status(200).json(response)      
+                        next()                    
+
                     }
-                }     
-                res.status(200).json(response)      
-                next()                    
+            })
             }    
         }else{
             req.body.userId = decoded.id
