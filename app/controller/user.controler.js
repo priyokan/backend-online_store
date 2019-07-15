@@ -2,7 +2,6 @@ const User = require('../models/users.model')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const jwtConfig = require('../../config/jwt.config')
-const tokenList = {}
 
 exports.register = (req,res,next)=>{
     if(!req.body){
@@ -63,31 +62,3 @@ exports.login = (req,res,next)=>{
         }
     })
 }
-// exports.token = (req,res)=>{
-//     if((req.body.refreshToken)&&(req.body.refreshToken in tokenList)){
-//         const token = jwt.sign({id:info._id},
-//             jwtConfig.secretToken,
-//             {expiresIn:jwtConfig.tokenLife})  
-//         const refreshToken = jwt.sign({id:info._id},
-//             jwtConfig.refreshTokenSecret,
-//             {expiresIn:jwtConfig.refreshTokenLife})     
-//         const response = {
-//             status:'sukses',    
-//             message:'logged',
-//             data:{user:info,
-//                 token:token,
-//                 refreshToken:refreshToken,
-//             }
-//         }     
-//         tokenList[refreshToken]=response
-//         res.status(200).json(response)
-
-//         }else{
-//         res.json({
-//         status:'error',
-//         message:'password anda salah',
-//         data:null
-//         })
-//         }
-//     }
-
