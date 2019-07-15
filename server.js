@@ -5,7 +5,7 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const logger = require('morgan')
 const dbConfig = require('./config/database.config')
-
+const jwtConfig = require('./config/jwt.config')
 const pesanans = require('./app/routes/pesanan.routes')
 const users = require('./app/routes/user.routes')
 const menus = require('./app/routes/menu.routes')
@@ -15,7 +15,6 @@ mongoose.Promise = global.Promise
 
 const app = express();
 
-app.set('secretKey','nodeRestApi')
 app.use(cors())
 app.use(logger('dev'))
 
@@ -36,12 +35,48 @@ mongoose.connect(dbConfig.url,{
         process.exit()             
     });
 
-app.get('/',(req,res)=>{
+app.get('/api',(req,res)=>{
     res.json({'message':'hati hati ada api'})
 })
 
+
+const validateUser = (req,res,next)=>{
+    jwt.verify(req.headers['token'],jwtConfig.secretToken,(err,decoded)=>{
+        if(err){
+            if(err.message!=='jwt expired'){
+                res.json({
+                    status:'error',
+                    message:err.message,
+                    data:null
+                })
+            }else {  
+                const payload = jwt.decode(req.headers['token'])
+                const newtoken = jwt.sign({id:payload.id},
+                    jwtConfig.secretToken,
+                    {expiresIn:jwtConfig.tokenLife})  
+                const newrefreshToken = jwt.sign({id:payload.id},
+                                    jwtConfig.refreshTokenSecret,
+                                    {expiresIn:jwtConfig.refreshTokenLife})     
+                const response = {
+                    status:'sukses',    
+                    message:'refreshed',
+                    data:{
+                        token:newtoken,
+                        refreshToken:newrefreshToken,
+                    }
+                }     
+                res.status(200).json(response)      
+                next()                    
+            }    
+        }else{
+            req.body.userId = decoded.id
+            next()
+        }
+    })
+}
+
 app.use('/api/user',users)
-app.use('/api/admin',menus)
+app.use('/api/admin',validateUser,menus)
 app.use('/api/admin',kues)
 app.use('/api/admin',pesanans)
 

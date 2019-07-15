@@ -12,7 +12,7 @@ exports.create = (req,res)=>{
         harga:req.body.harga,
         imgKue:"http://localhost:8081/img/kue/"+req.body.namaKue+'.jpg',
         menuType:req.body.menuType,
-        jumlahPesanan:req.body.jumlahPesanan,
+        jumlahPesanan:req.body.jumlahPesanan||0,
     })
 
     kue.save()
